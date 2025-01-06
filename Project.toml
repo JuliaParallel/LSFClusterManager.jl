@@ -1,6 +1,6 @@
-name = "ClusterManagers"
-uuid = "34f1f09b-3a8b-5176-ab39-66d58a4d544e"
-version = "0.4.7"
+name = "LSFClusterManager"
+uuid = "7deb8ad2-59a7-43a7-aa60-eaad96d3987a"
+version = "1.0.0-DEV"
 
 [deps]
 Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
