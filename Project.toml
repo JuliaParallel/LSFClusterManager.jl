@@ -1,4 +1,4 @@
-name = "ClusterManagers"
+name = "LSFClusterManager"
 uuid = "af02cf76-cbe3-4eeb-96a8-af9391005858"
 version = "1.0.0-DEV"
 

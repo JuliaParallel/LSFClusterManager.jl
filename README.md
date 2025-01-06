@@ -1,4 +1,4 @@
-# ClusterManagers.jl
+# LSFClusterManager.jl
 
 The `ClusterManager.jl` package implements code for different job queue systems commonly used on compute clusters.
 
@@ -11,7 +11,7 @@ The `ClusterManager.jl` package implements code for different job queue systems 
 
 ## Available job queue systems
 
-Implemented in this package (the `ClusterManagers.jl` package):
+Implemented in this package (the `LSFClusterManager.jl` package):
 
 | Job queue system | Command to add processors |
 | ---------------- | ------------------------- |
@@ -30,15 +30,15 @@ Implemented in external packages:
 
 | Job queue system | Command to add processors |
 | ---------------- | ------------------------- |
-| Kubernetes (K8s) via [K8sClusterManagers.jl](https://github.com/beacon-biosignals/K8sClusterManagers.jl) | `addprocs(K8sClusterManagers(np; kwargs...))` |
+| Kubernetes (K8s) via [K8sLSFClusterManager.jl](https://github.com/beacon-biosignals/K8sLSFClusterManager.jl) | `addprocs(K8sLSFClusterManager(np; kwargs...))` |
 | Azure scale-sets via [AzManagers.jl](https://github.com/ChevronETC/AzManagers.jl) | `addprocs(vmtemplate, n; kwargs...)` |
 
-You can also write your own custom cluster manager; see the instructions in the [Julia manual](https://docs.julialang.org/en/v1/manual/distributed-computing/#ClusterManagers).
+You can also write your own custom cluster manager; see the instructions in the [Julia manual](https://docs.julialang.org/en/v1/manual/distributed-computing/#LSFClusterManager).
 
 ### Slurm: a simple example
 
 ```julia
-using Distributed, ClusterManagers
+using Distributed, LSFClusterManager
 
 # Arguments to the Slurm srun(1) command can be given as keyword
 # arguments to addprocs.  The argument name and value is translated to
@@ -71,9 +71,9 @@ end
 ### SGE - a simple interactive example
 
 ```julia
-julia> using ClusterManagers
+julia> using LSFClusterManager
 
-julia> ClusterManagers.addprocs_sge(5; qsub_flags=`-q queue_name`)
+julia> LSFClusterManager.addprocs_sge(5; qsub_flags=`-q queue_name`)
 job id is 961, waiting for job to start .
 5-element Array{Any,1}:
 2
@@ -93,13 +93,13 @@ julia>  From worker 2:  compute-6
         From worker 3:  compute-6
 ```
 
-Some clusters require the user to specify a list of required resources. 
+Some clusters require the user to specify a list of required resources.
 For example, it may be necessary to specify how much memory will be needed by the job - see this [issue](https://github.com/JuliaLang/julia/issues/10390).
 The keyword `qsub_flags` can be used to specify these and other options.
 Additionally the keyword `wd` can be used to specify the working directory (which defaults to `ENV["HOME"]`).
 
 ```julia
-julia> using Distributed, ClusterManagers
+julia> using Distributed, LSFClusterManager
 
 julia> addprocs_sge(5; qsub_flags=`-q queue_name -l h_vmem=4G,tmem=4G`, wd=mktempdir())
 Job 5672349 in queue.
@@ -176,10 +176,10 @@ ElasticManager:
   Active workers : []
   Number of workers to be added  : 0
   Terminated workers : []
-  Worker connect command : 
-    /home/user/bin/julia --project=/home/user/myproject/Project.toml -e 'using ClusterManagers; ClusterManagers.elastic_worker("4cOSyaYpgSl6BC0C","127.0.1.1",36275)'
+  Worker connect command :
+    /home/user/bin/julia --project=/home/user/myproject/Project.toml -e 'using LSFClusterManager; LSFClusterManager.elastic_worker("4cOSyaYpgSl6BC0C","127.0.1.1",36275)'
 ```
 
-By default, the printed command uses the absolute path to the current Julia executable and activates the same project as the current session. You can change either of these defaults by passing `printing_kwargs=(absolute_exename=false, same_project=false))` to the first form of the `ElasticManager` constructor. 
+By default, the printed command uses the absolute path to the current Julia executable and activates the same project as the current session. You can change either of these defaults by passing `printing_kwargs=(absolute_exename=false, same_project=false))` to the first form of the `ElasticManager` constructor.
 
-Once workers are connected, you can print the `em` object again to see them added to the list of active workers. 
+Once workers are connected, you can print the `em` object again to see them added to the list of active workers.

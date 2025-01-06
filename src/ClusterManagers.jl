@@ -1,4 +1,4 @@
-module ClusterManagers
+module LSFClusterManager
 
 using Distributed
 using Sockets
