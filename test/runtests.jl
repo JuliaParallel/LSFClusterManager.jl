@@ -1,4 +1,4 @@
-import ClusterManagers
+import LSFClusterManager
 import Test
 
 import Distributed
