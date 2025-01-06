@@ -1,4 +1,4 @@
-module ClusterManagers
+module LSFClusterManager
 
 using Distributed
 using Sockets
@@ -21,4 +21,4 @@ include("affinity.jl")
 include("elastic.jl")
 include("lsf.jl")
 
-end
+end # module
