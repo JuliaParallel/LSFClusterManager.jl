@@ -10,13 +10,13 @@ using Distributed: procs, nprocs
 using Distributed: remotecall_fetch, @spawnat
 using Test: @testset, @test, @test_skip
 # ElasticManager:
-using ClusterManagers: ElasticManager
+using LSFClusterManager: ElasticManager
 # Slurm:
-using ClusterManagers: addprocs_slurm, SlurmManager
+using LSFClusterManager: addprocs_slurm, SlurmManager
 # LSF:
-using ClusterManagers: addprocs_lsf, LSFManager
+using LSFClusterManager: addprocs_lsf, LSFManager
 # SGE:
-using ClusterManagers: addprocs_sge, SGEManager
+using LSFClusterManager: addprocs_sge, SGEManager
 
 const test_args = lowercase.(strip.(ARGS))
 
