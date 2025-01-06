@@ -1,4 +1,4 @@
-import LSFClusterManager
+import LSFClusterManagers
 import Test
 
 import Distributed
@@ -11,7 +11,7 @@ using Distributed: remotecall_fetch, @spawnat
 using Test: @testset, @test, @test_skip
 
 # LSF:
-using LSFClusterManager: addprocs_lsf, LSFManager
+using LSFClusterManagers: addprocs_lsf, LSFManager
 
 const test_args = lowercase.(strip.(ARGS))
 
@@ -19,7 +19,7 @@ const test_args = lowercase.(strip.(ARGS))
 
 lsf_is_installed() = !isnothing(Sys.which("bsub"))
 
-@testset "LSFClusterManager.jl" begin
+@testset "LSFClusterManagers.jl" begin
     if lsf_is_installed()
         @info "Running the LSF tests..." Sys.which("bsub")
         include("lsf.jl")
