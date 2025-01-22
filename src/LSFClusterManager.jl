@@ -1,4 +1,4 @@
-module LSFClusterManagers
+module LSFClusterManager
 
 using Distributed
 using Sockets
@@ -12,4 +12,4 @@ worker_arg() = `--worker=$(worker_cookie())`
 
 include("lsf.jl")
 
-end
+end # module
