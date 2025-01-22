@@ -11,4 +11,4 @@ Implemented in this package (the `LSFClusterManager.jl` package):
 | ---------------- | ------------------------- |
 | Load Sharing Facility (LSF) | `addprocs_lsf(np::Integer; bsub_flags=``, ssh_cmd=``)` or `addprocs(LSFClusterManager.LSFManager(np, bsub_flags, ssh_cmd, retry_delays, throttle))` |
 
-The functionality in this package originally useed to live in [`ClusterManagers.jl`](https://github.com/JuliaParallel/ClusterManagers.jl).
+The functionality in this package originally used to live in [`ClusterManagers.jl`](https://github.com/JuliaParallel/ClusterManagers.jl).
