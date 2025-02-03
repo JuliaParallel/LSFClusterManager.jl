@@ -16,6 +16,9 @@ jobs:
     timeout-minutes: 10
     if: false
     runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Currently we do not have any CI for this repo."
   # finalize:
   #   timeout-minutes: 10
   #   needs:
