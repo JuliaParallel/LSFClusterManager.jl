@@ -15,7 +15,7 @@ jobs:
   finalize:
     timeout-minutes: 10
     needs:
-      - unit-tests
+      - no-ci
     # Important: the next line MUST be `if: always()`.
     # Do not change that line.
     # That line is necessary to make sure that this job runs even if tests fail.
@@ -23,28 +23,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo unit-tests: ${{ needs.unit-tests.result }}
+          echo no-ci: ${{ needs.no-ci.result }}
       - run: exit 1
         # The last line must NOT end with ||
         # All other lines MUST end with ||
         if: |
-          (needs.unit-tests.result != 'success')
-  unit-tests:
+          (needs.no-ci.result != 'success')
+  no-ci:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        version:
-          - '1.2'  # minimum Julia version supported in Project.toml
-          - '1.6'  # previous LTS
-          - '1.10' # current LTS
-          - '1'    # automatically expands to the latest stable 1.x release of Julia
     steps:
-    - uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-    - uses: julia-actions/setup-julia@v2
-      with:
-        version: ${{ matrix.version }}
-    - uses: julia-actions/julia-runtest@v1
+      - run: |
+          echo "::warning ::Currently we do not have any CI for this repo. https://github.com/JuliaParallel/LSFClusterManager.jl/issues/6"
+  # tests:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 20
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       version:
+  #         - '1.2'  # minimum Julia version supported in Project.toml
+  #         - '1.6'  # previous LTS
+  #         - '1.10' # current LTS
+  #         - '1'    # automatically expands to the latest stable 1.x release of Julia
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #     with:
+  #       persist-credentials: false
+  #   - uses: julia-actions/setup-julia@v2
+  #     with:
+  #       version: ${{ matrix.version }}
+  #   - uses: julia-actions/julia-runtest@v1
