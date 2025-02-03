@@ -12,31 +12,30 @@ concurrency:
 permissions:
   contents: read
 jobs:
-  no-ci:
+  finalize:
     timeout-minutes: 10
-    if: false
+    needs:
+      - no-ci
+    # Important: the next line MUST be `if: always()`.
+    # Do not change that line.
+    # That line is necessary to make sure that this job runs even if tests fail.
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "Currently we do not have any CI for this repo. https://github.com/JuliaParallel/LSFClusterManager.jl/issues/6"
-  # finalize:
-  #   timeout-minutes: 10
-  #   needs:
-  #     - unit-tests
-  #   # Important: the next line MUST be `if: always()`.
-  #   # Do not change that line.
-  #   # That line is necessary to make sure that this job runs even if tests fail.
-  #   if: always()
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - run: |
-  #         echo unit-tests: ${{ needs.unit-tests.result }}
-  #     - run: exit 1
-  #       # The last line must NOT end with ||
-  #       # All other lines MUST end with ||
-  #       if: |
-  #         (needs.unit-tests.result != 'success')
-  # unit-tests:
+          echo no-ci: ${{ needs.no-ci.result }}
+      - run: exit 1
+        # The last line must NOT end with ||
+        # All other lines MUST end with ||
+        if: |
+          (needs.no-ci.result != 'success')
+  no-ci:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "::warning Currently we do not have any CI for this repo. https://github.com/JuliaParallel/LSFClusterManager.jl/issues/6"
+  # tests:
   #   runs-on: ubuntu-latest
   #   timeout-minutes: 20
   #   strategy:
