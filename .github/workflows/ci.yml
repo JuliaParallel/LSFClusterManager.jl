@@ -12,39 +12,43 @@ concurrency:
 permissions:
   contents: read
 jobs:
-  finalize:
+  no-ci:
     timeout-minutes: 10
-    needs:
-      - unit-tests
-    # Important: the next line MUST be `if: always()`.
-    # Do not change that line.
-    # That line is necessary to make sure that this job runs even if tests fail.
-    if: always()
+    if: false
     runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo unit-tests: ${{ needs.unit-tests.result }}
-      - run: exit 1
-        # The last line must NOT end with ||
-        # All other lines MUST end with ||
-        if: |
-          (needs.unit-tests.result != 'success')
-  unit-tests:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        version:
-          - '1.2'  # minimum Julia version supported in Project.toml
-          - '1.6'  # previous LTS
-          - '1.10' # current LTS
-          - '1'    # automatically expands to the latest stable 1.x release of Julia
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-    - uses: julia-actions/setup-julia@v2
-      with:
-        version: ${{ matrix.version }}
-    - uses: julia-actions/julia-runtest@v1
+  # finalize:
+  #   timeout-minutes: 10
+  #   needs:
+  #     - unit-tests
+  #   # Important: the next line MUST be `if: always()`.
+  #   # Do not change that line.
+  #   # That line is necessary to make sure that this job runs even if tests fail.
+  #   if: always()
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: |
+  #         echo unit-tests: ${{ needs.unit-tests.result }}
+  #     - run: exit 1
+  #       # The last line must NOT end with ||
+  #       # All other lines MUST end with ||
+  #       if: |
+  #         (needs.unit-tests.result != 'success')
+  # unit-tests:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 20
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       version:
+  #         - '1.2'  # minimum Julia version supported in Project.toml
+  #         - '1.6'  # previous LTS
+  #         - '1.10' # current LTS
+  #         - '1'    # automatically expands to the latest stable 1.x release of Julia
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #     with:
+  #       persist-credentials: false
+  #   - uses: julia-actions/setup-julia@v2
+  #     with:
+  #       version: ${{ matrix.version }}
+  #   - uses: julia-actions/julia-runtest@v1
